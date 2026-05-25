@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>🚀 宇宙中国語 単語帳 — ZATT-MAN</title>
+<meta property="og:title" content="🚀 宇宙中国語 単語帳 — ZATT-MAN">
+<meta property="og:description" content="宇宙×中国語 30単語。神舟から未来へ 🛸">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ZATT-MAN SPACE CHINESE">
+<meta name="theme-color" content="#0D1B2A">
+<style>
+:root {
+  --bg:#0D1B2A; --text:#E8EDF5; --subtext:#7A8FA8;
+  --accent:#C8102E; --accent2:#FFD700;
+  --card-bg:rgba(255,255,255,.05); --card-border:rgba(255,255,255,.09);
+  --gold:#FFD700;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;font-family:'Helvetica Neue',Arial,'Hiragino Kaku Gothic ProN',sans-serif;}
+body{background:var(--bg);color:var(--text);overscroll-behavior:none;}
+
+.stars-bg{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 1000px 700px at 15% 20%,rgba(200,16,46,.06),transparent),
+    radial-gradient(ellipse 600px 600px at 85% 75%,rgba(255,215,0,.05),transparent),
+    radial-gradient(ellipse 800px 500px at 50% 50%,rgba(13,27,42,0),transparent);
+}
+
+/* ── Theme toggle ── */
+.theme-toggle{
+  position:fixed;top:14px;right:70px;z-index:300;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10);
+  color:#667;font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;-webkit-tap-highlight-color:transparent;
+}
+.theme-toggle:active{transform:scale(.9);}
+[data-theme="light"] .theme-toggle{background:rgba(13,27,42,.06);border-color:rgba(13,27,42,.08);color:#446688;}
+
+/* ══ TOC ══ */
+#page-toc{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;transition:transform .35s ease,opacity .35s ease;}
+#page-toc.hidden{transform:translateY(-100%);opacity:0;pointer-events:none;}
+
+.toc-header{padding:18px 20px 8px;text-align:center;flex-shrink:0;background:linear-gradient(180deg,rgba(13,27,42,.97) 65%,transparent);}
+.toc-logo{font-size:8px;letter-spacing:6px;color:rgba(200,16,46,.5);margin-bottom:6px;}
+.toc-title{font-size:20px;font-weight:900;letter-spacing:3px;
+  background:linear-gradient(135deg,#C8102E,#fff 55%,#C8102E);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:3px;}
+.toc-sub{font-size:8px;color:#2e3e52;letter-spacing:4px;}
+
+.toc-filter{display:flex;gap:6px;padding:8px 16px;overflow-x:auto;flex-shrink:0;scrollbar-width:none;}
+.toc-filter::-webkit-scrollbar{display:none;}
+.filter-btn{flex-shrink:0;font-size:8px;letter-spacing:2px;padding:5px 12px;border-radius:12px;
+  border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#7a8fa8;cursor:pointer;transition:all .2s;}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(200,16,46,.12);}
+
+.toc-grid{flex:1;overflow-y:auto;padding:8px 12px 16px;display:grid;grid-template-columns:repeat(5,1fr);gap:6px;align-content:start;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent;}
+.toc-item{
+  aspect-ratio:1;border-radius:10px;border:1px solid var(--card-border);
+  background:var(--card-bg);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;cursor:pointer;transition:all .18s;
+  padding:4px;overflow:hidden;
+}
+.toc-item:active{transform:scale(.92);}
+.toc-item.active-card{border-color:var(--accent);background:rgba(200,16,46,.1);}
+.toc-day{font-size:7px;color:#3a5268;letter-spacing:2px;margin-bottom:2px;}
+.toc-word{font-size:13px;font-weight:800;line-height:1.1;text-align:center;}
+.toc-week-header{grid-column:1/-1;font-size:7px;letter-spacing:4px;color:#3a5268;padding:6px 4px 2px;font-weight:700;}
+
+/* mascot */
+.mascot-wrap{display:flex;align-items:center;gap:8px;padding:8px 16px 4px;flex-shrink:0;}
+.mascot-face{font-size:28px;transition:transform .3s;cursor:default;flex-shrink:0;}
+.mascot-face.pop{animation:mascotPop .4s ease;}
+@keyframes mascotPop{0%{transform:scale(1)}40%{transform:scale(1.3) rotate(-8deg)}70%{transform:scale(.9)}100%{transform:scale(1)}}
+.mascot-info{flex:1;min-width:0;}
+.mascot-level{font-size:7px;letter-spacing:3px;color:var(--accent);font-weight:800;margin-bottom:2px;}
+.mascot-name{font-size:10px;font-weight:700;color:var(--text);}
+.mascot-bar{height:3px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:4px;overflow:hidden;}
+.mascot-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));transition:width .5s ease;}
+.learned-stats{font-size:9px;color:#3a5268;letter-spacing:2px;margin-top:4px;}
+
+/* quiz btn */
+.quiz-btn{
+  margin:8px 16px 0;padding:10px 0;border-radius:12px;
+  background:linear-gradient(135deg,rgba(200,16,46,.18),rgba(255,215,0,.12));
+  border:1px solid rgba(200,16,46,.28);color:#f08090;
+  font-size:10px;font-weight:800;letter-spacing:3px;cursor:pointer;transition:all .22s;
+  width:calc(100% - 32px);
+}
+.quiz-btn:active{transform:scale(.97);}
+
+/* ══ CARD PAGE ══ */
+#page-card{
+  position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;
+  background:var(--bg);transition:transform .35s ease,opacity .35s ease;
+}
+#page-card.hidden{transform:translateY(100%);opacity:0;pointer-events:none;}
+
+.card-topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 8px;flex-shrink:0;z-index:2;position:relative;}
+.back-btn{background:var(--card-bg);border:1px solid var(--card-border);color:var(--subtext);font-size:10px;padding:7px 15px;border-radius:20px;cursor:pointer;letter-spacing:1.5px;transition:all .2s;}
+.back-btn:active{background:rgba(255,255,255,.14);color:var(--text);}
+.card-day-badge{font-size:9px;font-weight:700;letter-spacing:4px;padding:5px 16px;border-radius:14px;border:1px solid;}
+.speak-btn{width:42px;height:42px;border-radius:50%;background:var(--card-bg);border:1px solid var(--card-border);color:var(--subtext);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.speak-btn:active{border-color:var(--accent);color:var(--accent);}
+
+.card-main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;text-align:center;user-select:none;cursor:pointer;position:relative;overflow:hidden;padding:0 32px;}
+.card-scene{position:absolute;inset:0;pointer-events:none;z-index:0;transition:background-image .4s ease;}
+.card-emoji{position:absolute;pointer-events:none;z-index:1;bottom:6%;right:-1%;font-size:clamp(110px,30vw,155px);line-height:1;opacity:0.05;transform:rotate(-10deg);transition:opacity .3s;user-select:none;}
+.card-content{position:relative;z-index:2;}
+.card-cat{font-size:8px;font-weight:700;letter-spacing:4px;margin-bottom:14px;opacity:.55;text-transform:uppercase;}
+.card-word{font-size:clamp(52px,15vw,96px);font-weight:900;line-height:1.02;letter-spacing:2px;margin-bottom:6px;}
+.card-pinyin{font-size:18px;font-weight:400;color:var(--accent);letter-spacing:2px;margin-bottom:6px;font-style:italic;}
+.card-phonetics{display:flex;align-items:center;gap:8px;margin-bottom:16px;}
+.pho-kana{font-size:14px;color:rgba(255,255,255,.45);letter-spacing:2px;}
+.card-line{width:52px;height:1.5px;border-radius:1px;margin-bottom:16px;}
+.card-meaning{font-size:26px;font-weight:700;letter-spacing:2px;}
+.tap-hint{font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.15);margin-top:20px;transition:opacity .3s;}
+.card-main.ex-open .tap-hint{opacity:0;}
+
+/* example panel */
+.ex-panel{
+  position:absolute;bottom:0;left:0;right:0;
+  background:rgba(13,27,42,0.97);backdrop-filter:blur(20px);
+  border-top:1px solid rgba(255,255,255,.09);
+  border-radius:18px 18px 0 0;padding:16px 20px 32px;
+  transform:translateY(100%);transition:transform .35s cubic-bezier(.4,.0,.2,1);
+  z-index:5;
+}
+.ex-panel.show{transform:translateY(0);}
+.ex-handle{width:34px;height:3px;background:var(--card-border);border-radius:2px;margin:0 auto 14px;}
+.ex-tag-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.ex-tag{font-size:8px;font-weight:700;letter-spacing:3px;}
+.ex-speak-btn{width:34px;height:34px;border-radius:50%;background:var(--card-bg);border:1px solid var(--card-border);color:var(--subtext);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.ex-speak-btn:active{border-color:var(--accent);color:var(--accent);}
+.ex-speak-btn.playing{border-color:var(--accent);color:var(--accent);}
+.ex-zh{font-size:16px;font-weight:600;color:var(--text);line-height:1.5;margin-bottom:4px;}
+.ex-jp{font-size:13px;color:var(--subtext);margin-bottom:12px;line-height:1.4;}
+.ex-hr{height:1px;background:var(--card-border);margin-bottom:10px;}
+.ex-naze-tag{font-size:8px;font-weight:700;letter-spacing:2px;color:var(--gold);margin-bottom:6px;}
+.ex-naze{font-size:12px;color:#6a8aaa;line-height:1.7;margin-bottom:10px;}
+.ex-x-tag{font-size:8px;font-weight:700;letter-spacing:2px;color:#2a3a4a;margin-bottom:4px;margin-top:4px;}
+.ex-x{font-size:10px;color:#2a3a4a;line-height:1.6;}
+
+/* bottom nav */
+.card-bottom{flex-shrink:0;padding:10px 24px 26px;display:flex;flex-direction:column;gap:12px;align-items:center;}
+.card-counter{font-size:9px;color:#3a5268;letter-spacing:4px;}
+.card-nav{display:flex;align-items:center;gap:20px;}
+.nav-btn{width:54px;height:54px;border-radius:50%;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.05);color:rgba(255,255,255,.55);font-size:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;line-height:1;}
+.nav-btn:active{background:rgba(255,255,255,.13);color:#fff;}
+.nav-btn:disabled{opacity:.14;cursor:default;}
+.progress-bar{width:100%;height:2px;background:rgba(255,255,255,.06);border-radius:1px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));transition:width .3s ease;}
+@keyframes fxR{0%{opacity:1;transform:none}38%{opacity:0;transform:translateX(26px)}39%{opacity:0;transform:translateX(-26px)}100%{opacity:1;transform:none}}
+@keyframes fxL{0%{opacity:1;transform:none}38%{opacity:0;transform:translateX(-26px)}39%{opacity:0;transform:translateX(26px)}100%{opacity:1;transform:none}}
+
+.learned-btn{display:flex;align-items:center;gap:6px;padding:8px 20px;border-radius:20px;border:1.5px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:rgba(255,255,255,.36);font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all .25s;}
+.learned-btn.done{border-color:#32c87a;color:#32c87a;background:rgba(50,200,122,.12);}
+.learned-btn:active{transform:scale(.94);}
+.toc-item.learned{opacity:.6;}
+.toc-item.learned .toc-day::after{content:' ✓';color:#32c87a;}
+
+/* ══ QUIZ OVERLAY ══ */
+#quiz-overlay{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;transition:opacity .3s;}
+#quiz-overlay.hidden{opacity:0;pointer-events:none;}
+.quiz-close{position:absolute;top:20px;right:20px;background:none;border:none;color:var(--subtext);font-size:22px;cursor:pointer;padding:8px;}
+.quiz-label{font-size:8px;letter-spacing:4px;color:var(--accent);margin-bottom:16px;}
+.quiz-word{font-size:clamp(44px,14vw,80px);font-weight:900;margin-bottom:8px;}
+.quiz-pinyin{font-size:16px;color:var(--accent);letter-spacing:2px;margin-bottom:24px;font-style:italic;}
+.quiz-reveal{display:none;text-align:center;}
+.quiz-reveal.show{display:block;}
+.quiz-meaning{font-size:20px;font-weight:700;color:var(--text);margin-bottom:20px;}
+.quiz-actions{display:flex;gap:16px;}
+.quiz-action-btn{flex:1;padding:14px 0;border-radius:14px;border:1.5px solid;font-size:11px;font-weight:800;letter-spacing:2px;cursor:pointer;background:transparent;transition:all .2s;}
+.quiz-action-btn.yes{border-color:#32c87a;color:#32c87a;}
+.quiz-action-btn.no{border-color:var(--accent);color:var(--accent);}
+.quiz-action-btn:active{transform:scale(.95);}
+.quiz-tap-hint{font-size:10px;color:var(--subtext);letter-spacing:2px;margin-bottom:24px;}
+.quiz-progress-wrap{width:100%;max-width:320px;margin-top:24px;}
+.quiz-bar{height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;}
+.quiz-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));transition:width .4s;}
+.quiz-result{text-align:center;display:none;}
+.quiz-result.show{display:block;}
+.quiz-result-emoji{font-size:60px;margin-bottom:12px;}
+.quiz-result-title{font-size:22px;font-weight:800;margin-bottom:8px;}
+.quiz-result-sub{font-size:12px;color:var(--subtext);margin-bottom:24px;}
+.quiz-result-btn{padding:12px 32px;border-radius:12px;background:var(--accent);color:#fff;border:none;font-size:11px;font-weight:800;letter-spacing:2px;cursor:pointer;}
+
+/* ══ LIGHT MODE ══ */
+[data-theme="light"] body{background:#F0F4FF;color:#0a1628;}
+[data-theme="light"] .stars-bg{opacity:0;}
+[data-theme="light"] .card-scene{opacity:.12 !important;}
+[data-theme="light"] .card-word{color:#0a1628 !important;text-shadow:none !important;}
+[data-theme="light"] .card-meaning{color:#1a2c40;}
+[data-theme="light"] .card-cat{color:#6688aa;}
+[data-theme="light"] .card-pinyin{color:#C8102E;}
+[data-theme="light"] .pho-kana{color:rgba(10,22,40,.45);}
+[data-theme="light"] .tap-hint{color:rgba(10,22,40,.2);}
+[data-theme="light"] .toc-header{background:linear-gradient(180deg,rgba(240,244,255,.97) 60%,transparent);}
+[data-theme="light"] .toc-logo{color:rgba(10,22,40,.22);}
+[data-theme="light"] .toc-title{background:linear-gradient(135deg,#C8102E,#0a1628 55%,#C8102E);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="light"] .toc-sub{color:#7799bb;}
+[data-theme="light"] .toc-week-header{color:#9aabbb;}
+[data-theme="light"] .toc-item{background:rgba(10,22,40,.04);border-color:rgba(10,22,40,.09);}
+[data-theme="light"] .filter-btn{background:rgba(10,22,40,.04);border-color:rgba(10,22,40,.09);color:#6688aa;}
+[data-theme="light"] .filter-btn.active{border-color:#C8102E;color:#C8102E;background:rgba(200,16,46,.08);}
+[data-theme="light"] .ex-panel{background:rgba(240,244,255,.97);}
+[data-theme="light"] .ex-zh{color:#0a1628;}
+[data-theme="light"] .ex-jp{color:#446688;}
+[data-theme="light"] .ex-hr{background:rgba(10,22,40,.06);}
+[data-theme="light"] .ex-naze{color:#445566;}
+[data-theme="light"] .ex-x{color:#7799bb;}
+[data-theme="light"] .ex-speak-btn{background:rgba(10,22,40,.05);border-color:rgba(10,22,40,.09);color:#446688;}
+[data-theme="light"] .nav-btn{background:rgba(10,22,40,.05);border-color:rgba(10,22,40,.08);color:rgba(10,22,40,.55);}
+[data-theme="light"] .progress-bar{background:rgba(10,22,40,.07);}
+[data-theme="light"] .card-counter{color:#99aacc;}
+[data-theme="light"] .mascot-bar{background:rgba(10,22,40,.07);}
+[data-theme="light"] .mascot-name{color:#0a1628;}
+[data-theme="light"] .mascot-level{color:#C8102E;}
+[data-theme="light"] .learned-stats{color:#99aacc;}
+[data-theme="light"] .quiz-btn{background:linear-gradient(135deg,rgba(200,16,46,.09),rgba(255,215,0,.07));border-color:rgba(200,16,46,.25);color:#C8102E;}
+[data-theme="light"] #page-card{background:#F0F4FF;}
+[data-theme="light"] .back-btn{background:rgba(10,22,40,.06);border-color:rgba(10,22,40,.09);color:#334466;}
+[data-theme="light"] .speak-btn{background:rgba(10,22,40,.05);border-color:rgba(10,22,40,.08);color:#446688;}
+[data-theme="light"] #quiz-overlay{background:#F0F4FF;}
+[data-theme="light"] .quiz-word{color:#0a1628;}
+[data-theme="light"] .quiz-pinyin{color:#C8102E;}
+[data-theme="light"] .quiz-result-title{color:#0a1628;}
+[data-theme="light"] .quiz-result-sub{color:#6688aa;}
+[data-theme="light"] .quiz-bar{background:rgba(10,22,40,.07);}
+</style>
+</head>
+<body>
+<div class="stars-bg"></div>
+<button class="theme-toggle" id="theme-toggle" title="ダーク / ライト切替">☀️</button>
+
+<!-- ── TOC ── -->
+<div id="page-toc">
+  <div class="toc-header">
+    <div class="toc-logo">ZATT-MAN × SPACE CHINESE</div>
+    <div class="toc-title">宇宙中国語 単語帳</div>
+    <div class="toc-sub">SPACE CHINESE VOCABULARY</div>
+  </div>
+  <div class="mascot-wrap">
+    <div class="mascot-face" id="mascot-face">🥚</div>
+    <div class="mascot-info">
+      <div class="mascot-level" id="mascot-level">LEVEL 1</div>
+      <div class="mascot-name" id="mascot-name">太空蛋</div>
+      <div class="mascot-bar"><div class="mascot-bar-fill" id="mascot-bar" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div class="learned-stats" id="learned-stats" style="padding:0 20px 4px;"></div>
+  <button class="quiz-btn" id="quiz-start-btn">🎯 クイズモード</button>
+  <div class="toc-filter" id="toc-filter"></div>
+  <div class="toc-grid" id="toc-grid"></div>
+</div>
+
+<!-- ── FLASHCARD ── -->
+<div id="page-card" class="hidden">
+  <div class="card-topbar">
+    <button class="back-btn" id="back-btn">← 一覧</button>
+    <div class="card-day-badge" id="card-day">DAY 01</div>
+    <button class="speak-btn" id="speak-btn">🔊</button>
+  </div>
+  <div class="card-main" id="card-main">
+    <div class="card-scene" id="card-scene"></div>
+    <div class="card-emoji" id="card-emoji"></div>
+    <div class="card-content">
+      <div class="card-cat" id="card-cat"></div>
+      <div class="card-word" id="card-word"></div>
+      <div class="card-pinyin" id="card-pinyin"></div>
+      <div class="card-phonetics">
+        <span class="pho-kana" id="card-pron"></span>
+      </div>
+      <div class="card-line" id="card-line"></div>
+      <div class="card-meaning" id="card-meaning"></div>
+      <div class="tap-hint">タップで例文 ▼</div>
+    </div>
+    <div class="ex-panel" id="ex-panel">
+      <div class="ex-handle"></div>
+      <div class="ex-tag-row">
+        <div class="ex-tag" id="ex-tag">📝 例文</div>
+        <button class="ex-speak-btn" id="ex-speak-btn">🔊</button>
+      </div>
+      <div class="ex-zh" id="ex-zh"></div>
+      <div class="ex-jp" id="ex-jp"></div>
+      <div class="ex-hr"></div>
+      <div class="ex-naze-tag">💡 なぜこの単語？</div>
+      <div class="ex-naze" id="ex-naze"></div>
+      <div class="ex-x-tag">🐦 X投稿ドラフト</div>
+      <div class="ex-x" id="ex-x"></div>
+    </div>
+  </div>
+  <div class="card-bottom">
+    <div class="card-counter" id="card-counter">01 / 30</div>
+    <div class="card-nav">
+      <button class="nav-btn" id="prev-btn">←</button>
+      <button class="learned-btn" id="learned-btn">✓ 覚えた</button>
+      <button class="nav-btn" id="next-btn">→</button>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<!-- ── QUIZ OVERLAY ── -->
+<div id="quiz-overlay" class="hidden">
+  <button class="quiz-close" id="quiz-close">✕</button>
+  <div id="quiz-main">
+    <div class="quiz-label">🎯 QUIZ MODE</div>
+    <div class="quiz-word" id="quiz-word"></div>
+    <div class="quiz-pinyin" id="quiz-pinyin"></div>
+    <div class="quiz-tap-hint">タップで意味を表示</div>
+    <div class="quiz-reveal" id="quiz-reveal">
+      <div class="quiz-meaning" id="quiz-meaning"></div>
+      <div class="quiz-actions">
+        <button class="quiz-action-btn no" id="quiz-no">まだ</button>
+        <button class="quiz-action-btn yes" id="quiz-yes">✓ 覚えた</button>
+      </div>
+    </div>
+    <div class="quiz-progress-wrap">
+      <div class="quiz-bar"><div class="quiz-bar-fill" id="quiz-bar" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div class="quiz-result hidden" id="quiz-result">
+    <div class="quiz-result-emoji" id="quiz-result-emoji">🎉</div>
+    <div class="quiz-result-title" id="quiz-result-title">クイズ完了！</div>
+    <div class="quiz-result-sub" id="quiz-result-sub"></div>
+    <button class="quiz-result-btn" id="quiz-result-btn">一覧に戻る</button>
+  </div>
+</div>
+
+<script>
+/* ── DATA ── */
+const WORDS = [
+  // Week 1: 基本語
+  {day:1,week:1,word:'宇宙',pinyin:'yǔzhòu',pron:'ユイヂョウ',meaning:'宇宙',tag:'COSMOS',
+   ex_zh:'我梦想探索宇宙。',ex_jp:'私は宇宙を探索することを夢見ている。',
+   naze:'宇宙ビジネスの根本。日本語と同じ漢字だが発音は全く異なる。中国語の宇宙感覚で掴もう。',
+   x:'🌌 宇宙＝yǔzhòu。日中同じ字！でも発音は「ユイヂョウ」 #宇宙中国語 #ZATTMAN',
+   acc:'#C8102E',gold:true,planet:['180,20,30','100,10,20']},
+  {day:2,week:1,word:'火箭',pinyin:'huǒjiàn',pron:'フォジエン',meaning:'ロケット',tag:'ROCKET',
+   ex_zh:'火箭发射成功了！',ex_jp:'ロケットの打ち上げが成功した！',
+   naze:'火（火）+ 箭（矢）= 火の矢！まさにロケットの本質を突いた命名センス。',
+   x:'🚀 火箭（huǒjiàn）= ロケット。火の矢！語源が完璧すぎる #宇宙中国語',
+   acc:'#FF4500',gold:false,planet:['255,60,0','180,30,0']},
+  {day:3,week:1,word:'卫星',pinyin:'wèixīng',pron:'ウェイシン',meaning:'衛星',tag:'SATELLITE',
+   ex_zh:'卫星在轨道上运行。',ex_jp:'衛星が軌道上を周回している。',
+   naze:'Starlinkも中国版StarNetも「卫星」。宇宙ビジネスのキーワード。',
+   x:'🛰️ 卫星（wèixīng）= 衛星。宇宙ビジネスの主役 #宇宙中国語',
+   acc:'#1E8DE0',gold:false,planet:['30,140,220','10,80,160']},
+  {day:4,week:1,word:'轨道',pinyin:'guǐdào',pron:'グイダオ',meaning:'軌道',tag:'ORBIT',
+   ex_zh:'卫星进入了轨道。',ex_jp:'衛星が軌道に入った。',
+   naze:'轨（レール）+ 道（道）= 軌道。まさに「道」を走るイメージ。',
+   x:'🔄 轨道（guǐdào）= 軌道。レールの道！ #宇宙中国語',
+   acc:'#3A86FF',gold:false,planet:['50,120,240','20,70,180']},
+  {day:5,week:1,word:'重力',pinyin:'zhònglì',pron:'ヂョンリー',meaning:'重力',tag:'GRAVITY',
+   ex_zh:'月球的重力比地球小。',ex_jp:'月の重力は地球より小さい。',
+   naze:'日本語と同じ漢字！ただし発音は「ヂョンリー」。重さの力、シンプル極まりない。',
+   x:'⬇️ 重力（zhònglì）= 重力。日中同じ漢字！でも読み方が全然違う #宇宙中国語',
+   acc:'#7B5EA7',gold:false,planet:['100,80,160','60,40,100']},
+
+  // Week 2: 宇航員・ミッション
+  {day:6,week:2,word:'宇航员',pinyin:'yǔhángyuán',pron:'ユィハンユエン',meaning:'宇宙飛行士',tag:'TAIKONAUT',
+   ex_zh:'宇航员在空间站生活。',ex_jp:'宇宙飛行士が宇宙ステーションで生活している。',
+   naze:'中国独自の呼び方は「太空人」とも。英語のTaikonautは世界共通語になった。',
+   x:'👨‍🚀 宇航员（yǔhángyuán）= 宇宙飛行士。中国語ではTaikonautとも #宇宙中国語',
+   acc:'#C8102E',gold:true,planet:['180,20,30','100,10,20']},
+  {day:7,week:2,word:'发射',pinyin:'fāshè',pron:'ファーシェー',meaning:'打ち上げ',tag:'LAUNCH',
+   ex_zh:'火箭明天发射！',ex_jp:'ロケットは明日打ち上げだ！',
+   naze:'发（発する）+ 射（射る）= 放って射る。ロケットにぴったりすぎる動詞。',
+   x:'🚀 发射（fāshè）= 打ち上げ。「放って射る」最高の語感 #宇宙中国語',
+   acc:'#FF6B00',gold:false,planet:['240,100,0','180,60,0']},
+  {day:8,week:2,word:'任务',pinyin:'rènwù',pron:'レンウー',meaning:'ミッション',tag:'MISSION',
+   ex_zh:'这次任务非常重要。',ex_jp:'今回のミッションは非常に重要だ。',
+   naze:'任せられた務め=任务。神舟ミッションも全部こう呼ぶ。英語のMissionと完全対応。',
+   x:'🎯 任务（rènwù）= ミッション。神舟もSpaceXも #宇宙中国語',
+   acc:'#1E8DE0',gold:false,planet:['30,130,200','10,80,150']},
+  {day:9,week:2,word:'对接',pinyin:'duìjiē',pron:'ドゥイジエ',meaning:'ドッキング',tag:'DOCKING',
+   ex_zh:'飞船与空间站对接了。',ex_jp:'宇宙船が宇宙ステーションにドッキングした。',
+   naze:'对（向かい合う）+ 接（接続）= ドッキングそのもの。ISSへの神舟ドッキングもこれ。',
+   x:'🔗 对接（duìjiē）= ドッキング。向き合って接続！ #宇宙中国語',
+   acc:'#32C87A',gold:false,planet:['40,180,110','20,120,70']},
+  {day:10,week:2,word:'返回',pinyin:'fǎnhuí',pron:'ファンフイ',meaning:'帰還',tag:'RETURN',
+   ex_zh:'宇航员安全返回地球。',ex_jp:'宇宙飛行士が地球に安全帰還した。',
+   naze:'返+回=戻って帰る。SpaceXのスプラッシュダウンも、神舟の着陸も「返回」。',
+   x:'🌍 返回（fǎnhuí）= 帰還。スプラッシュダウンも返回！ #宇宙中国語',
+   acc:'#3A86FF',gold:false,planet:['50,120,240','20,70,180']},
+
+  // Week 3: 天体
+  {day:11,week:3,word:'太阳系',pinyin:'tàiyángxì',pron:'タイヤンシー',meaning:'太陽系',tag:'SOLAR SYSTEM',
+   ex_zh:'我们生活在太阳系中。',ex_jp:'私たちは太陽系の中に住んでいる。',
+   naze:'太阳（太陽）+ 系（系）= 太陽系。日本語とほぼ同じ！覚えやすさ最強。',
+   x:'☀️ 太阳系（tàiyángxì）= 太陽系。そのまんまで最高 #宇宙中国語',
+   acc:'#FFD700',gold:true,planet:['220,180,0','160,120,0']},
+  {day:12,week:3,word:'星系',pinyin:'xīngxì',pron:'シンシー',meaning:'銀河/星系',tag:'GALAXY',
+   ex_zh:'银河系是我们的星系。',ex_jp:'天の川銀河は私たちの星系だ。',
+   naze:'星+系=星の系統。天の川銀河は「银河系（Yínhéxì）」と言う。',
+   x:'🌌 星系（xīngxì）= 銀河。星の大家族 #宇宙中国語',
+   acc:'#8B5CF6',gold:false,planet:['120,80,220','70,40,160']},
+  {day:13,week:3,word:'黑洞',pinyin:'hēidòng',pron:'ヘイドン',meaning:'ブラックホール',tag:'BLACK HOLE',
+   ex_zh:'黑洞吸收一切光线。',ex_jp:'ブラックホールはあらゆる光を吸収する。',
+   naze:'黑（黒）+ 洞（穴）= 黒い穴！中国語の造語センスが神がかってる。',
+   x:'🕳️ 黑洞（hēidòng）= ブラックホール。黒い穴！完璧すぎ #宇宙中国語',
+   acc:'#2a2a4a',gold:false,planet:['40,40,80','20,20,50']},
+  {day:14,week:3,word:'小行星',pinyin:'xiǎoxíngxīng',pron:'シャオシンシン',meaning:'小惑星',tag:'ASTEROID',
+   ex_zh:'小行星可能与地球相撞。',ex_jp:'小惑星が地球に衝突する可能性がある。',
+   naze:'小+行星（惑星）=小さい惑星。はやぶさ2が行ったリュウグウも「小行星」。',
+   x:'☄️ 小行星（xiǎoxíngxīng）= 小惑星。はやぶさの目的地 #宇宙中国語',
+   acc:'#A0522D',gold:false,planet:['150,70,30','90,40,15']},
+  {day:15,week:3,word:'星云',pinyin:'xīngyún',pron:'シンユン',meaning:'星雲/ネビュラ',tag:'NEBULA',
+   ex_zh:'哈勃望远镜拍到了美丽的星云。',ex_jp:'ハッブル望遠鏡が美しい星雲を撮影した。',
+   naze:'星+云=星の雲。写真で見ると本当に雲みたいで、命名が詩的すぎる。',
+   x:'🌫️ 星云（xīngyún）= 星雲。星の雲、詩的すぎる #宇宙中国語',
+   acc:'#EC4899',gold:false,planet:['200,60,130','140,30,90']},
+
+  // Week 4: 技術
+  {day:16,week:4,word:'推力',pinyin:'tuīlì',pron:'トゥイリー',meaning:'推力/スラスト',tag:'THRUST',
+   ex_zh:'火箭需要很大的推力。',ex_jp:'ロケットには大きな推力が必要だ。',
+   naze:'推（推す）+ 力（力）= 推力。SpaceXのRaptorエンジンもこれで評価される。',
+   x:'💪 推力（tuīlì）= スラスト。推す力！ #宇宙中国語',
+   acc:'#FF4500',gold:false,planet:['240,60,0','160,30,0']},
+  {day:17,week:4,word:'载荷',pinyin:'zàihè',pron:'ザイフォー',meaning:'ペイロード',tag:'PAYLOAD',
+   ex_zh:'这次任务的载荷是一颗卫星。',ex_jp:'今回のミッションのペイロードは衛星1基だ。',
+   naze:'载（積む）+ 荷（荷物）= 積み荷。打ち上げコストはペイロード単価で比較する。',
+   x:'📦 载荷（zàihè）= ペイロード。宇宙版の積み荷 #宇宙中国語',
+   acc:'#1E8DE0',gold:false,planet:['30,130,200','10,80,150']},
+  {day:18,week:4,word:'推进剂',pinyin:'tuījìnjì',pron:'トゥイジンジー',meaning:'推進剤',tag:'PROPELLANT',
+   ex_zh:'液氧是常用的推进剂。',ex_jp:'液体酸素は一般的な推進剤だ。',
+   naze:'推进（推進）+ 剂（剤）。StarshipはメタンをStarship推进剂として使用。',
+   x:'⛽ 推进剂（tuījìnjì）= 推進剤。宇宙版の燃料 #宇宙中国語',
+   acc:'#10B981',gold:false,planet:['10,160,110','5,100,70']},
+  {day:19,week:4,word:'遥测',pinyin:'yáocè',pron:'ヤオツァ',meaning:'テレメトリー',tag:'TELEMETRY',
+   ex_zh:'地面站接收遥测数据。',ex_jp:'地上局がテレメトリーデータを受信する。',
+   naze:'遥（遠い）+ 测（測る）= 遠隔計測。打ち上げ中のリアルタイムデータ。',
+   x:'📡 遥测（yáocè）= テレメトリー。遠くから測る #宇宙中国語',
+   acc:'#6366F1',gold:false,planet:['80,90,220','50,55,160']},
+  {day:20,week:4,word:'复用',pinyin:'fùyòng',pron:'フーヨン',meaning:'再利用/リユーザブル',tag:'REUSABLE',
+   ex_zh:'SpaceX实现了火箭复用。',ex_jp:'SpaceXはロケットの再利用を実現した。',
+   naze:'复（再び）+ 用（使う）= 再使用。Falcon 9最多34回飛行もこのコンセプト。',
+   x:'♻️ 复用（fùyòng）= 再利用。SpaceXが変えたゲーム #宇宙中国語',
+   acc:'#32C87A',gold:false,planet:['40,180,110','20,120,70']},
+
+  // Week 5: 宇宙ビジネス
+  {day:21,week:5,word:'投资',pinyin:'tóuzī',pron:'トウズー',meaning:'投資',tag:'INVESTMENT',
+   ex_zh:'宇宙产业吸引大量投资。',ex_jp:'宇宙産業は大量の投資を集めている。',
+   naze:'投（投じる）+ 资（資金）= 投資。日本語と同じ意味！字形が违う（简体字）だけ。',
+   x:'💰 投资（tóuzī）= 投資。宇宙産業に流れ込む資金 #宇宙中国語',
+   acc:'#FFD700',gold:true,planet:['220,180,0','150,120,0']},
+  {day:22,week:5,word:'融资',pinyin:'róngzī',pron:'ロンズー',meaning:'資金調達',tag:'FUNDRAISING',
+   ex_zh:'这家公司融资十亿美元。',ex_jp:'この会社は10億ドルの資金調達をした。',
+   naze:'融（溶ける・融合）+ 资（資金）= 融資。スタートアップのラウンドがこれ。',
+   x:'🤝 融资（róngzī）= 資金調達。スタートアップの命綱 #宇宙中国語',
+   acc:'#C8102E',gold:false,planet:['180,20,30','120,10,20']},
+  {day:23,week:5,word:'收益',pinyin:'shōuyì',pron:'ショウイー',meaning:'収益/レベニュー',tag:'REVENUE',
+   ex_zh:'Starlink的收益持续增长。',ex_jp:'StarlinkのRevenue（収益）は成長し続けている。',
+   naze:'收（収める）+ 益（利益）= 収益。SpaceXの$187億収益もこの単語。',
+   x:'📈 收益（shōuyì）= 収益。SpaceXを支える数字 #宇宙中国語',
+   acc:'#10B981',gold:false,planet:['10,160,110','5,100,70']},
+  {day:24,week:5,word:'创业',pinyin:'chuàngyè',pron:'チュアンイエ',meaning:'起業/スタートアップ',tag:'STARTUP',
+   ex_zh:'宇宙创业公司越来越多。',ex_jp:'宇宙スタートアップがどんどん増えている。',
+   naze:'创（創造）+ 业（事業）= 創業。中国でも宇宙スタートアップ（宇宙创业）ブーム中。',
+   x:'🚀 创业（chuàngyè）= 起業。宇宙創業の時代が来た #宇宙中国語',
+   acc:'#F59E0B',gold:false,planet:['220,140,0','160,90,0']},
+  {day:25,week:5,word:'估值',pinyin:'gūzhí',pron:'グーヂー',meaning:'バリュエーション',tag:'VALUATION',
+   ex_zh:'SpaceX的估值达两万亿美元。',ex_jp:'SpaceXのバリュエーションは2兆ドルに達した。',
+   naze:'估（見積もる）+ 值（価値）= 企業価値評価。SpaceXのIPO议题もこれ。',
+   x:'💎 估值（gūzhí）= バリュエーション。SpaceXは$2T #宇宙中国語',
+   acc:'#8B5CF6',gold:false,planet:['120,80,220','70,40,160']},
+
+  // Week 6: ビジョン
+  {day:26,week:6,word:'梦想',pinyin:'mèngxiǎng',pron:'モンシアン',meaning:'夢',tag:'DREAM',
+   ex_zh:'探索宇宙是我的梦想。',ex_jp:'宇宙を探索することが私の夢だ。',
+   naze:'梦（夢）+ 想（思い）= 夢想。马斯克（Musk）の火星夢も「梦想」。世界共通の言葉。',
+   x:'🌟 梦想（mèngxiǎng）= 夢。宇宙への夢は世界共通 #宇宙中国語',
+   acc:'#C8102E',gold:true,planet:['180,20,30','100,10,20']},
+  {day:27,week:6,word:'先驱',pinyin:'xiānqū',pron:'シエンチュー',meaning:'パイオニア',tag:'PIONEER',
+   ex_zh:'他是宇宙探索的先驱。',ex_jp:'彼は宇宙探索のパイオニアだ。',
+   naze:'先（先に）+ 驱（駆ける）= 先に走る者。Gagarin・Armstrong・楊利偉全員これ。',
+   x:'🏃 先驱（xiānqū）= パイオニア。宇宙の道を切り開く人 #宇宙中国語',
+   acc:'#FFD700',gold:false,planet:['220,180,0','150,120,0']},
+  {day:28,week:6,word:'无限',pinyin:'wúxiàn',pron:'ウーシエン',meaning:'無限',tag:'INFINITY',
+   ex_zh:'宇宙是无限的。',ex_jp:'宇宙は無限だ。',
+   naze:'无（無）+ 限（限り）= 無限。「To infinity and beyond!」が这里就是无限！',
+   x:'∞ 无限（wúxiàn）= 無限。宇宙の本質 #宇宙中国語',
+   acc:'#6366F1',gold:false,planet:['80,90,220','50,55,160']},
+  {day:29,week:6,word:'探索',pinyin:'tànsuǒ',pron:'タンスオ',meaning:'探索',tag:'EXPLORATION',
+   ex_zh:'人类不断探索未知的宇宙。',ex_jp:'人類は未知の宇宙を探索し続けている。',
+   naze:'探（探る）+ 索（たどる）= 探索。中国の月探査機「嫦娥（Chang\'e）」もこれが目的。',
+   x:'🔭 探索（tànsuǒ）= 探索。人類の本能 #宇宙中国語',
+   acc:'#3A86FF',gold:false,planet:['50,120,240','20,70,180']},
+  {day:30,week:6,word:'未来',pinyin:'wèilái',pron:'ウェイライ',meaning:'未来',tag:'FUTURE',
+   ex_zh:'宇宙是人类的未来。',ex_jp:'宇宙は人類の未来だ。',
+   naze:'未（まだ）+ 来（来る）= まだ来ていないもの。SpaceX・JAXA・全人類の共通テーマ。',
+   x:'🔮 未来（wèilái）= 未来。宇宙こそ人類の未来 #宇宙中国語',
+   acc:'#C8102E',gold:true,planet:['180,20,30','100,10,20']},
+];
+
+/* ── Background art ── */
+const EMOJIS=['🌏','🚀','🛸','🌕','⭐','🔭','🛰️','🌌','🌠','🌙'];
+function mkBg(p){
+  const c1=p.planet[0],c2=p.planet[1]||c1;
+  const patterns=[
+    `radial-gradient(ellipse 340px 340px at 72% 38%,rgba(${c1},.22),rgba(${c1},.04) 55%,transparent),radial-gradient(ellipse 200px 200px at 28% 62%,rgba(${c2},.14),transparent)`,
+    `radial-gradient(circle 260px at 65% 35%,rgba(${c1},.18),transparent 65%),radial-gradient(ellipse 400px 180px at 30% 70%,rgba(${c2},.10),transparent)`,
+    `conic-gradient(from 210deg at 70% 35%,rgba(${c1},.0),rgba(${c1},.18),rgba(${c1},.0)),radial-gradient(ellipse 180px 300px at 70% 35%,rgba(${c1},.08),transparent)`,
+    `radial-gradient(ellipse 300px 180px at 78% 28%,rgba(${c1},.20),transparent),radial-gradient(ellipse 160px 260px at 22% 72%,rgba(${c2},.12),transparent)`,
+    `radial-gradient(circle 220px at 74% 30%,rgba(${c1},.15),transparent 60%),radial-gradient(circle 160px at 24% 68%,rgba(${c2},.10),transparent)`,
+  ];
+  return patterns[Math.floor(Math.abs(c1.charCodeAt(0)-c2.charCodeAt(0)))%patterns.length];
+}
+
+/* ── Learned storage ── */
+const LEARNED_KEY='spaceZh_learned';
+function getLearnedSet(){try{return new Set(JSON.parse(localStorage.getItem(LEARNED_KEY))||[]);}catch{return new Set();}}
+function saveLearnedSet(s){localStorage.setItem(LEARNED_KEY,JSON.stringify([...s]));}
+
+/* ── Mascot ── */
+const MASCOT_LEVELS=[
+  {min:0,  max:0,  face:'🥚', level:'LEVEL 1', name:'太空蛋'},
+  {min:1,  max:12, face:'🐣', level:'LEVEL 2', name:'見習い生'},
+  {min:13, max:25, face:'🧑‍🚀',level:'LEVEL 3', name:'訓練生'},
+  {min:26, max:50, face:'🚀', level:'LEVEL 4', name:'神舟パイロット'},
+  {min:51, max:74, face:'⭐', level:'LEVEL 5', name:'太空先鋒'},
+  {min:75, max:89, face:'🌟', level:'LEVEL 6', name:'天宮司令'},
+  {min:90, max:100,face:'🏆', level:'LEVEL 7', name:'宇宙英雄'},
+];
+function updateMascot(){
+  const s=getLearnedSet();
+  const pct=Math.round(s.size/WORDS.length*100);
+  const lv=MASCOT_LEVELS.find(l=>pct<=l.max)||MASCOT_LEVELS[MASCOT_LEVELS.length-1];
+  const old=document.getElementById('mascot-face').textContent;
+  document.getElementById('mascot-face').textContent=lv.face;
+  document.getElementById('mascot-level').textContent=lv.level;
+  document.getElementById('mascot-name').textContent=lv.name;
+  document.getElementById('mascot-bar').style.width=pct+'%';
+  document.getElementById('learned-stats').textContent=`${s.size} / ${WORDS.length} 単語習得 (${pct}%)`;
+  if(old!==lv.face){const f=document.getElementById('mascot-face');f.classList.remove('pop');void f.offsetWidth;f.classList.add('pop');}
+}
+
+/* ── TOC build ── */
+let curFilter=0;
+function buildToc(){
+  const learned=getLearnedSet();
+  const filter=document.getElementById('toc-filter');
+  const grid=document.getElementById('toc-grid');
+  filter.innerHTML='';
+  grid.innerHTML='';
+  const weeks=[...new Set(WORDS.map(w=>w.week))];
+  ['ALL',...weeks.map(w=>`W${w}`)].forEach((label,i)=>{
+    const b=document.createElement('button');
+    b.className='filter-btn'+(curFilter===i?' active':'');
+    b.textContent=label;
+    b.addEventListener('click',()=>{curFilter=i;buildToc();});
+    filter.appendChild(b);
+  });
+  let lastWeek=-1;
+  const filtered=curFilter===0?WORDS:WORDS.filter(w=>w.week===curFilter);
+  filtered.forEach(w=>{
+    if(w.week!==lastWeek){
+      const h=document.createElement('div');
+      h.className='toc-week-header';
+      const labels={1:'W1 基本語',2:'W2 宇航员・ミッション',3:'W3 天体',4:'W4 技術',5:'W5 宇宙ビジネス',6:'W6 ビジョン'};
+      h.textContent=labels[w.week]||`W${w.week}`;
+      grid.appendChild(h);
+      lastWeek=w.week;
+    }
+    const item=document.createElement('div');
+    item.className='toc-item'+(learned.has(w.day)?' learned':'');
+    item.dataset.day=w.day;
+    const day=document.createElement('div');day.className='toc-day';day.textContent=`DAY ${String(w.day).padStart(2,'0')}`;
+    const word=document.createElement('div');word.className='toc-word';word.textContent=w.word;
+    word.style.color=w.acc||'#E8EDF5';
+    item.appendChild(day);item.appendChild(word);
+    item.addEventListener('click',()=>openCard(w.day-1));
+    grid.appendChild(item);
+  });
+  updateMascot();
+}
+
+/* ── Card ── */
+let cur=0,exOpen=false,anim=null;
+function openCard(idx){
+  cur=idx; exOpen=false;
+  document.getElementById('page-toc').classList.add('hidden');
+  document.getElementById('page-card').classList.remove('hidden');
+  document.getElementById('ex-panel').classList.remove('show');
+  document.getElementById('card-main').classList.remove('ex-open');
+  renderCard();
+}
+function renderCard(dir){
+  const w=WORDS[cur];
+  if(dir&&anim){clearTimeout(anim);}
+  const main=document.getElementById('card-main');
+  if(dir){
+    const cl=document.getElementById('card-content');
+    cl.style.animation=`${dir==='r'?'fxR':'fxL'} .38s ease forwards`;
+    anim=setTimeout(()=>{cl.style.animation='';},400);
+  }
+  document.getElementById('card-day').textContent=`DAY ${String(w.day).padStart(2,'0')}`;
+  document.getElementById('card-day').style.borderColor=w.acc||'#C8102E';
+  document.getElementById('card-day').style.color=w.acc||'#C8102E';
+  document.getElementById('card-cat').textContent=w.tag;
+  document.getElementById('card-word').textContent=w.word;
+  document.getElementById('card-word').style.color=w.gold?w.acc:'#E8EDF5';
+  document.getElementById('card-word').style.textShadow=w.gold?`0 0 40px ${w.acc}80`:'none';
+  document.getElementById('card-pinyin').textContent=w.pinyin;
+  document.getElementById('card-pron').textContent=w.pron;
+  document.getElementById('card-line').style.background=w.acc||'#C8102E';
+  document.getElementById('card-meaning').textContent=w.meaning;
+  document.getElementById('card-emoji').textContent=EMOJIS[cur%EMOJIS.length];
+  document.getElementById('card-scene').style.backgroundImage=mkBg(w);
+  document.getElementById('ex-zh').textContent=w.ex_zh;
+  document.getElementById('ex-jp').textContent=w.ex_jp;
+  document.getElementById('ex-naze').textContent=w.naze;
+  document.getElementById('ex-x').textContent=w.x;
+  const learned=getLearnedSet();
+  const lb=document.getElementById('learned-btn');
+  lb.className='learned-btn'+(learned.has(w.day)?' done':'');
+  lb.textContent=learned.has(w.day)?'★ 習得済み':'✓ 覚えた';
+  document.getElementById('card-counter').textContent=`${String(cur+1).padStart(2,'0')} / ${String(WORDS.length).padStart(2,'0')}`;
+  document.getElementById('progress-fill').style.width=((cur+1)/WORDS.length*100)+'%';
+  document.getElementById('prev-btn').disabled=cur===0;
+  document.getElementById('next-btn').disabled=cur===WORDS.length-1;
+  exOpen=false;
+  document.getElementById('ex-panel').classList.remove('show');
+  main.classList.remove('ex-open');
+}
+
+/* nav */
+document.getElementById('prev-btn').addEventListener('click',()=>{if(cur>0){cur--;renderCard('l');}});
+document.getElementById('next-btn').addEventListener('click',()=>{if(cur<WORDS.length-1){cur++;renderCard('r');}});
+document.getElementById('back-btn').addEventListener('click',()=>{
+  document.getElementById('page-card').classList.add('hidden');
+  document.getElementById('page-toc').classList.remove('hidden');
+  buildToc();
+});
+
+/* swipe */
+let tx=0,ty=0;
+document.getElementById('card-main').addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+document.getElementById('card-main').addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>Math.abs(dy)+30){if(dx<-40&&cur<WORDS.length-1){cur++;renderCard('r');}else if(dx>40&&cur>0){cur--;renderCard('l');}}
+  else if(dy<-50&&!exOpen){exOpen=true;document.getElementById('ex-panel').classList.add('show');document.getElementById('card-main').classList.add('ex-open');}
+  else if(dy>50&&exOpen){exOpen=false;document.getElementById('ex-panel').classList.remove('show');document.getElementById('card-main').classList.remove('ex-open');}
+  else if(Math.abs(dx)<15&&Math.abs(dy)<15){
+    if(!exOpen){exOpen=true;document.getElementById('ex-panel').classList.add('show');document.getElementById('card-main').classList.add('ex-open');}
+    else{exOpen=false;document.getElementById('ex-panel').classList.remove('show');document.getElementById('card-main').classList.remove('ex-open');}
+  }
+});
+
+/* keyboard */
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'&&cur<WORDS.length-1){cur++;renderCard('r');}
+  if(e.key==='ArrowLeft'&&cur>0){cur--;renderCard('l');}
+  if(e.key===' '){if(!exOpen){exOpen=true;document.getElementById('ex-panel').classList.add('show');document.getElementById('card-main').classList.add('ex-open');}else{exOpen=false;document.getElementById('ex-panel').classList.remove('show');document.getElementById('card-main').classList.remove('ex-open');}e.preventDefault();}
+  if(e.key==='Escape'){document.getElementById('page-card').classList.add('hidden');document.getElementById('page-toc').classList.remove('hidden');buildToc();}
+});
+
+/* learned */
+document.getElementById('learned-btn').addEventListener('click',()=>{
+  const s=getLearnedSet();const w=WORDS[cur];
+  if(s.has(w.day)){s.delete(w.day);}else{s.add(w.day);}
+  saveLearnedSet(s);
+  const lb=document.getElementById('learned-btn');
+  lb.className='learned-btn'+(s.has(w.day)?' done':'');
+  lb.textContent=s.has(w.day)?'★ 習得済み':'✓ 覚えた';
+  updateMascot();
+});
+
+/* speak */
+function speakNow(){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  setTimeout(()=>{
+    const u=new SpeechSynthesisUtterance(WORDS[cur].word);
+    u.lang='zh-CN';u.rate=0.85;u.pitch=1.0;
+    window.speechSynthesis.speak(u);
+  },320);
+}
+document.getElementById('speak-btn').addEventListener('click',speakNow);
+function speakEx(){
+  if(!window.speechSynthesis)return;
+  const btn=document.getElementById('ex-speak-btn');
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(WORDS[cur].ex_zh);
+  u.lang='zh-CN';u.rate=0.80;u.pitch=1.0;
+  u.onstart=()=>btn.classList.add('playing');
+  u.onend=()=>btn.classList.remove('playing');
+  u.onerror=()=>btn.classList.remove('playing');
+  window.speechSynthesis.speak(u);
+}
+document.getElementById('ex-speak-btn').addEventListener('click',e=>{e.stopPropagation();speakEx();});
+document.getElementById('ex-speak-btn').addEventListener('touchend',e=>e.stopPropagation());
+
+/* ── Quiz ── */
+let quizQueue=[],quizIdx=0,quizCorrect=0,quizRevealed=false;
+document.getElementById('quiz-start-btn').addEventListener('click',startQuiz);
+function startQuiz(){
+  const s=getLearnedSet();
+  quizQueue=WORDS.filter(w=>!s.has(w.day)).sort(()=>Math.random()-.5);
+  if(quizQueue.length===0){quizQueue=[...WORDS].sort(()=>Math.random()-.5);}
+  quizIdx=0;quizCorrect=0;quizRevealed=false;
+  document.getElementById('quiz-result').classList.add('hidden');
+  document.getElementById('quiz-main').style.display='';
+  document.getElementById('quiz-overlay').classList.remove('hidden');
+  showQuizCard();
+}
+function showQuizCard(){
+  if(quizIdx>=quizQueue.length){endQuiz();return;}
+  const w=quizQueue[quizIdx];
+  quizRevealed=false;
+  document.getElementById('quiz-word').textContent=w.word;
+  document.getElementById('quiz-pinyin').textContent=w.pinyin;
+  document.getElementById('quiz-reveal').classList.remove('show');
+  document.getElementById('quiz-meaning').textContent=w.meaning;
+  document.getElementById('quiz-bar').style.width=(quizIdx/quizQueue.length*100)+'%';
+}
+document.getElementById('quiz-overlay').addEventListener('click',e=>{
+  if(!quizRevealed&&!['quiz-close','quiz-yes','quiz-no'].includes(e.target.id)){
+    quizRevealed=true;
+    document.getElementById('quiz-reveal').classList.add('show');
+  }
+});
+document.getElementById('quiz-yes').addEventListener('click',e=>{
+  e.stopPropagation();
+  const s=getLearnedSet();s.add(quizQueue[quizIdx].day);saveLearnedSet(s);
+  quizCorrect++;quizIdx++;showQuizCard();updateMascot();
+});
+document.getElementById('quiz-no').addEventListener('click',e=>{e.stopPropagation();quizIdx++;showQuizCard();});
+document.getElementById('quiz-close').addEventListener('click',()=>{document.getElementById('quiz-overlay').classList.add('hidden');});
+document.getElementById('quiz-result-btn').addEventListener('click',()=>{document.getElementById('quiz-overlay').classList.add('hidden');buildToc();});
+function endQuiz(){
+  document.getElementById('quiz-main').style.display='none';
+  const r=document.getElementById('quiz-result');r.classList.remove('hidden');r.classList.add('show');
+  const pct=Math.round(quizCorrect/quizQueue.length*100);
+  document.getElementById('quiz-result-emoji').textContent=pct>=80?'🏆':pct>=50?'🚀':'💪';
+  document.getElementById('quiz-result-title').textContent=`${quizCorrect} / ${quizQueue.length} 正解！`;
+  document.getElementById('quiz-result-sub').textContent=`正答率 ${pct}%`;
+}
+
+/* ── Theme toggle ── */
+const THEME_KEY_ZH='spaceZh_theme';
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  document.getElementById('theme-toggle').textContent=t==='light'?'🌙':'☀️';
+  localStorage.setItem(THEME_KEY_ZH,t);
+}
+applyTheme(localStorage.getItem(THEME_KEY_ZH)||'dark');
+document.getElementById('theme-toggle').addEventListener('click',()=>{
+  applyTheme(document.documentElement.getAttribute('data-theme')==='light'?'dark':'light');
+});
+
+/* ── Init ── */
+buildToc();
+</script>
+</body>
+</html>
