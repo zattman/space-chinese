@@ -168,6 +168,7 @@ body{background:var(--bg);color:var(--text);overscroll-behavior:none;}
 .ex-speak-btn:active{border-color:var(--accent);color:var(--accent);}
 .ex-speak-btn.playing{border-color:var(--accent);color:var(--accent);}
 .ex-zh{font-size:16px;font-weight:600;color:var(--text);line-height:1.5;margin-bottom:4px;}
+.ex-kana{font-size:11px;color:rgba(200,16,46,.75);letter-spacing:.8px;margin-bottom:8px;font-style:italic;border-left:2px solid rgba(200,16,46,.28);padding:2px 8px;background:rgba(200,16,46,.06);border-radius:0 4px 4px 0;line-height:1.6;}
 .ex-jp{font-size:13px;color:var(--subtext);margin-bottom:12px;line-height:1.4;}
 .ex-hr{height:1px;background:var(--card-border);margin-bottom:10px;}
 .ex-naze-tag{font-size:8px;font-weight:700;letter-spacing:2px;color:var(--gold);margin-bottom:6px;}
@@ -242,6 +243,7 @@ body{background:var(--bg);color:var(--text);overscroll-behavior:none;}
 [data-theme="light"] .filter-btn.active{border-color:#C8102E;color:#C8102E;background:rgba(200,16,46,.08);}
 [data-theme="light"] .ex-panel{background:rgba(240,244,255,.97);}
 [data-theme="light"] .ex-zh{color:#0a1628;}
+[data-theme="light"] .ex-kana{color:#C8102E;background:rgba(200,16,46,.06);border-left-color:rgba(200,16,46,.28);}
 [data-theme="light"] .ex-jp{color:#446688;}
 [data-theme="light"] .ex-hr{background:rgba(10,22,40,.06);}
 [data-theme="light"] .ex-naze{color:#445566;}
@@ -319,6 +321,7 @@ body{background:var(--bg);color:var(--text);overscroll-behavior:none;}
         <button class="ex-speak-btn" id="ex-speak-btn">🔊</button>
       </div>
       <div class="ex-zh" id="ex-zh"></div>
+      <div class="ex-kana" id="ex-kana"></div>
       <div class="ex-jp" id="ex-jp"></div>
       <div class="ex-hr"></div>
       <div class="ex-naze-tag">💡 なぜこの単語？</div>
@@ -370,162 +373,162 @@ body{background:var(--bg);color:var(--text);overscroll-behavior:none;}
 const WORDS = [
   // Week 1: 基本語
   {day:1,week:1,word:'宇宙',pinyin:'yǔzhòu',pron:'ユイヂョウ',meaning:'宇宙',tag:'COSMOS',
-   ex_zh:'我梦想探索宇宙。',ex_jp:'私は宇宙を探索することを夢見ている。',
+   ex_zh:'我梦想探索宇宙。',ex_kana:'ウォー モンシアン タンスオ ユイヂョウ。',ex_jp:'私は宇宙を探索することを夢見ている。',
    naze:'宇宙ビジネスの根本。日本語と同じ漢字だが発音は全く異なる。中国語の宇宙感覚で掴もう。',
    x:'🌌 宇宙＝yǔzhòu。日中同じ字！でも発音は「ユイヂョウ」 #宇宙中国語 #ZATTMAN',
    acc:'#C8102E',gold:true,planet:['180,20,30','100,10,20']},
   {day:2,week:1,word:'火箭',pinyin:'huǒjiàn',pron:'フォジエン',meaning:'ロケット',tag:'ROCKET',
-   ex_zh:'火箭发射成功了！',ex_jp:'ロケットの打ち上げが成功した！',
+   ex_zh:'火箭发射成功了！',ex_kana:'フォジエン ファーシェー チェングォン ラ！',ex_jp:'ロケットの打ち上げが成功した！',
    naze:'火（火）+ 箭（矢）= 火の矢！まさにロケットの本質を突いた命名センス。',
    x:'🚀 火箭（huǒjiàn）= ロケット。火の矢！語源が完璧すぎる #宇宙中国語',
    acc:'#FF4500',gold:false,planet:['255,60,0','180,30,0']},
   {day:3,week:1,word:'卫星',pinyin:'wèixīng',pron:'ウェイシン',meaning:'衛星',tag:'SATELLITE',
-   ex_zh:'卫星在轨道上运行。',ex_jp:'衛星が軌道上を周回している。',
+   ex_zh:'卫星在轨道上运行。',ex_kana:'ウェイシン ザイ グイダオ シャン ユンシン。',ex_jp:'衛星が軌道上を周回している。',
    naze:'Starlinkも中国版StarNetも「卫星」。宇宙ビジネスのキーワード。',
    x:'🛰️ 卫星（wèixīng）= 衛星。宇宙ビジネスの主役 #宇宙中国語',
    acc:'#1E8DE0',gold:false,planet:['30,140,220','10,80,160']},
   {day:4,week:1,word:'轨道',pinyin:'guǐdào',pron:'グイダオ',meaning:'軌道',tag:'ORBIT',
-   ex_zh:'卫星进入了轨道。',ex_jp:'衛星が軌道に入った。',
+   ex_zh:'卫星进入了轨道。',ex_kana:'ウェイシン ジンルー ラ グイダオ。',ex_jp:'衛星が軌道に入った。',
    naze:'轨（レール）+ 道（道）= 軌道。まさに「道」を走るイメージ。',
    x:'🔄 轨道（guǐdào）= 軌道。レールの道！ #宇宙中国語',
    acc:'#3A86FF',gold:false,planet:['50,120,240','20,70,180']},
   {day:5,week:1,word:'重力',pinyin:'zhònglì',pron:'ヂョンリー',meaning:'重力',tag:'GRAVITY',
-   ex_zh:'月球的重力比地球小。',ex_jp:'月の重力は地球より小さい。',
+   ex_zh:'月球的重力比地球小。',ex_kana:'ユエチウ ダ ヂョンリー ビー ディーチウ シャオ。',ex_jp:'月の重力は地球より小さい。',
    naze:'日本語と同じ漢字！ただし発音は「ヂョンリー」。重さの力、シンプル極まりない。',
    x:'⬇️ 重力（zhònglì）= 重力。日中同じ漢字！でも読み方が全然違う #宇宙中国語',
    acc:'#7B5EA7',gold:false,planet:['100,80,160','60,40,100']},
 
   // Week 2: 宇航員・ミッション
   {day:6,week:2,word:'宇航员',pinyin:'yǔhángyuán',pron:'ユィハンユエン',meaning:'宇宙飛行士',tag:'TAIKONAUT',
-   ex_zh:'宇航员在空间站生活。',ex_jp:'宇宙飛行士が宇宙ステーションで生活している。',
+   ex_zh:'宇航员在空间站生活。',ex_kana:'ユィハンユエン ザイ コンジエンヂャン シェンフォ。',ex_jp:'宇宙飛行士が宇宙ステーションで生活している。',
    naze:'中国独自の呼び方は「太空人」とも。英語のTaikonautは世界共通語になった。',
    x:'👨‍🚀 宇航员（yǔhángyuán）= 宇宙飛行士。中国語ではTaikonautとも #宇宙中国語',
    acc:'#C8102E',gold:true,planet:['180,20,30','100,10,20']},
   {day:7,week:2,word:'发射',pinyin:'fāshè',pron:'ファーシェー',meaning:'打ち上げ',tag:'LAUNCH',
-   ex_zh:'火箭明天发射！',ex_jp:'ロケットは明日打ち上げだ！',
+   ex_zh:'火箭明天发射！',ex_kana:'フォジエン ミンティエン ファーシェー！',ex_jp:'ロケットは明日打ち上げだ！',
    naze:'发（発する）+ 射（射る）= 放って射る。ロケットにぴったりすぎる動詞。',
    x:'🚀 发射（fāshè）= 打ち上げ。「放って射る」最高の語感 #宇宙中国語',
    acc:'#FF6B00',gold:false,planet:['240,100,0','180,60,0']},
   {day:8,week:2,word:'任务',pinyin:'rènwù',pron:'レンウー',meaning:'ミッション',tag:'MISSION',
-   ex_zh:'这次任务非常重要。',ex_jp:'今回のミッションは非常に重要だ。',
+   ex_zh:'这次任务非常重要。',ex_kana:'ヂェー ツー レンウー フェイチャン ヂョンヤオ。',ex_jp:'今回のミッションは非常に重要だ。',
    naze:'任せられた務め=任务。神舟ミッションも全部こう呼ぶ。英語のMissionと完全対応。',
    x:'🎯 任务（rènwù）= ミッション。神舟もSpaceXも #宇宙中国語',
    acc:'#1E8DE0',gold:false,planet:['30,130,200','10,80,150']},
   {day:9,week:2,word:'对接',pinyin:'duìjiē',pron:'ドゥイジエ',meaning:'ドッキング',tag:'DOCKING',
-   ex_zh:'飞船与空间站对接了。',ex_jp:'宇宙船が宇宙ステーションにドッキングした。',
+   ex_zh:'飞船与空间站对接了。',ex_kana:'フェイチュアン ユィ コンジエンヂャン ドゥイジエ ラ。',ex_jp:'宇宙船が宇宙ステーションにドッキングした。',
    naze:'对（向かい合う）+ 接（接続）= ドッキングそのもの。ISSへの神舟ドッキングもこれ。',
    x:'🔗 对接（duìjiē）= ドッキング。向き合って接続！ #宇宙中国語',
    acc:'#32C87A',gold:false,planet:['40,180,110','20,120,70']},
   {day:10,week:2,word:'返回',pinyin:'fǎnhuí',pron:'ファンフイ',meaning:'帰還',tag:'RETURN',
-   ex_zh:'宇航员安全返回地球。',ex_jp:'宇宙飛行士が地球に安全帰還した。',
+   ex_zh:'宇航员安全返回地球。',ex_kana:'ユィハンユエン アンチュアン ファンフイ ディーチウ。',ex_jp:'宇宙飛行士が地球に安全帰還した。',
    naze:'返+回=戻って帰る。SpaceXのスプラッシュダウンも、神舟の着陸も「返回」。',
    x:'🌍 返回（fǎnhuí）= 帰還。スプラッシュダウンも返回！ #宇宙中国語',
    acc:'#3A86FF',gold:false,planet:['50,120,240','20,70,180']},
 
   // Week 3: 天体
   {day:11,week:3,word:'太阳系',pinyin:'tàiyángxì',pron:'タイヤンシー',meaning:'太陽系',tag:'SOLAR SYSTEM',
-   ex_zh:'我们生活在太阳系中。',ex_jp:'私たちは太陽系の中に住んでいる。',
+   ex_zh:'我们生活在太阳系中。',ex_kana:'ウォーメン シェンフォ ザイ タイヤンシー ヂョン。',ex_jp:'私たちは太陽系の中に住んでいる。',
    naze:'太阳（太陽）+ 系（系）= 太陽系。日本語とほぼ同じ！覚えやすさ最強。',
    x:'☀️ 太阳系（tàiyángxì）= 太陽系。そのまんまで最高 #宇宙中国語',
    acc:'#FFD700',gold:true,planet:['220,180,0','160,120,0']},
   {day:12,week:3,word:'星系',pinyin:'xīngxì',pron:'シンシー',meaning:'銀河/星系',tag:'GALAXY',
-   ex_zh:'银河系是我们的星系。',ex_jp:'天の川銀河は私たちの星系だ。',
+   ex_zh:'银河系是我们的星系。',ex_kana:'インフーシー シー ウォーメン ダ シンシー。',ex_jp:'天の川銀河は私たちの星系だ。',
    naze:'星+系=星の系統。天の川銀河は「银河系（Yínhéxì）」と言う。',
    x:'🌌 星系（xīngxì）= 銀河。星の大家族 #宇宙中国語',
    acc:'#8B5CF6',gold:false,planet:['120,80,220','70,40,160']},
   {day:13,week:3,word:'黑洞',pinyin:'hēidòng',pron:'ヘイドン',meaning:'ブラックホール',tag:'BLACK HOLE',
-   ex_zh:'黑洞吸收一切光线。',ex_jp:'ブラックホールはあらゆる光を吸収する。',
+   ex_zh:'黑洞吸收一切光线。',ex_kana:'ヘイドン シーショウ イーチエ グアンシエン。',ex_jp:'ブラックホールはあらゆる光を吸収する。',
    naze:'黑（黒）+ 洞（穴）= 黒い穴！中国語の造語センスが神がかってる。',
    x:'🕳️ 黑洞（hēidòng）= ブラックホール。黒い穴！完璧すぎ #宇宙中国語',
    acc:'#2a2a4a',gold:false,planet:['40,40,80','20,20,50']},
   {day:14,week:3,word:'小行星',pinyin:'xiǎoxíngxīng',pron:'シャオシンシン',meaning:'小惑星',tag:'ASTEROID',
-   ex_zh:'小行星可能与地球相撞。',ex_jp:'小惑星が地球に衝突する可能性がある。',
+   ex_zh:'小行星可能与地球相撞。',ex_kana:'シャオシンシン クーノン ユィ ディーチウ シャンヂュアン。',ex_jp:'小惑星が地球に衝突する可能性がある。',
    naze:'小+行星（惑星）=小さい惑星。はやぶさ2が行ったリュウグウも「小行星」。',
    x:'☄️ 小行星（xiǎoxíngxīng）= 小惑星。はやぶさの目的地 #宇宙中国語',
    acc:'#A0522D',gold:false,planet:['150,70,30','90,40,15']},
   {day:15,week:3,word:'星云',pinyin:'xīngyún',pron:'シンユン',meaning:'星雲/ネビュラ',tag:'NEBULA',
-   ex_zh:'哈勃望远镜拍到了美丽的星云。',ex_jp:'ハッブル望遠鏡が美しい星雲を撮影した。',
+   ex_zh:'哈勃望远镜拍到了美丽的星云。',ex_kana:'ハーボー ワンユエンジン パイダオ ラ メイリー ダ シンユン。',ex_jp:'ハッブル望遠鏡が美しい星雲を撮影した。',
    naze:'星+云=星の雲。写真で見ると本当に雲みたいで、命名が詩的すぎる。',
    x:'🌫️ 星云（xīngyún）= 星雲。星の雲、詩的すぎる #宇宙中国語',
    acc:'#EC4899',gold:false,planet:['200,60,130','140,30,90']},
 
   // Week 4: 技術
   {day:16,week:4,word:'推力',pinyin:'tuīlì',pron:'トゥイリー',meaning:'推力/スラスト',tag:'THRUST',
-   ex_zh:'火箭需要很大的推力。',ex_jp:'ロケットには大きな推力が必要だ。',
+   ex_zh:'火箭需要很大的推力。',ex_kana:'フォジエン シューヤオ ヘン ダー ダ トゥイリー。',ex_jp:'ロケットには大きな推力が必要だ。',
    naze:'推（推す）+ 力（力）= 推力。SpaceXのRaptorエンジンもこれで評価される。',
    x:'💪 推力（tuīlì）= スラスト。推す力！ #宇宙中国語',
    acc:'#FF4500',gold:false,planet:['240,60,0','160,30,0']},
   {day:17,week:4,word:'载荷',pinyin:'zàihè',pron:'ザイフォー',meaning:'ペイロード',tag:'PAYLOAD',
-   ex_zh:'这次任务的载荷是一颗卫星。',ex_jp:'今回のミッションのペイロードは衛星1基だ。',
+   ex_zh:'这次任务的载荷是一颗卫星。',ex_kana:'ヂェー ツー レンウー ダ ザイフォー シー イー クー ウェイシン。',ex_jp:'今回のミッションのペイロードは衛星1基だ。',
    naze:'载（積む）+ 荷（荷物）= 積み荷。打ち上げコストはペイロード単価で比較する。',
    x:'📦 载荷（zàihè）= ペイロード。宇宙版の積み荷 #宇宙中国語',
    acc:'#1E8DE0',gold:false,planet:['30,130,200','10,80,150']},
   {day:18,week:4,word:'推进剂',pinyin:'tuījìnjì',pron:'トゥイジンジー',meaning:'推進剤',tag:'PROPELLANT',
-   ex_zh:'液氧是常用的推进剂。',ex_jp:'液体酸素は一般的な推進剤だ。',
+   ex_zh:'液氧是常用的推进剂。',ex_kana:'イェーヤン シー チャンヨン ダ トゥイジンジー。',ex_jp:'液体酸素は一般的な推進剤だ。',
    naze:'推进（推進）+ 剂（剤）。StarshipはメタンをStarship推进剂として使用。',
    x:'⛽ 推进剂（tuījìnjì）= 推進剤。宇宙版の燃料 #宇宙中国語',
    acc:'#10B981',gold:false,planet:['10,160,110','5,100,70']},
   {day:19,week:4,word:'遥测',pinyin:'yáocè',pron:'ヤオツァ',meaning:'テレメトリー',tag:'TELEMETRY',
-   ex_zh:'地面站接收遥测数据。',ex_jp:'地上局がテレメトリーデータを受信する。',
+   ex_zh:'地面站接收遥测数据。',ex_kana:'ディーミエンヂャン ジエショウ ヤオツァ シュージュー。',ex_jp:'地上局がテレメトリーデータを受信する。',
    naze:'遥（遠い）+ 测（測る）= 遠隔計測。打ち上げ中のリアルタイムデータ。',
    x:'📡 遥测（yáocè）= テレメトリー。遠くから測る #宇宙中国語',
    acc:'#6366F1',gold:false,planet:['80,90,220','50,55,160']},
   {day:20,week:4,word:'复用',pinyin:'fùyòng',pron:'フーヨン',meaning:'再利用/リユーザブル',tag:'REUSABLE',
-   ex_zh:'SpaceX实现了火箭复用。',ex_jp:'SpaceXはロケットの再利用を実現した。',
+   ex_zh:'SpaceX实现了火箭复用。',ex_kana:'SpaceX シーシエン ラ フォジエン フーヨン。',ex_jp:'SpaceXはロケットの再利用を実現した。',
    naze:'复（再び）+ 用（使う）= 再使用。Falcon 9最多34回飛行もこのコンセプト。',
    x:'♻️ 复用（fùyòng）= 再利用。SpaceXが変えたゲーム #宇宙中国語',
    acc:'#32C87A',gold:false,planet:['40,180,110','20,120,70']},
 
   // Week 5: 宇宙ビジネス
   {day:21,week:5,word:'投资',pinyin:'tóuzī',pron:'トウズー',meaning:'投資',tag:'INVESTMENT',
-   ex_zh:'宇宙产业吸引大量投资。',ex_jp:'宇宙産業は大量の投資を集めている。',
+   ex_zh:'宇宙产业吸引大量投资。',ex_kana:'ユイヂョウ チャンイエ シーイン ダーリャン トウズー。',ex_jp:'宇宙産業は大量の投資を集めている。',
    naze:'投（投じる）+ 资（資金）= 投資。日本語と同じ意味！字形が违う（简体字）だけ。',
    x:'💰 投资（tóuzī）= 投資。宇宙産業に流れ込む資金 #宇宙中国語',
    acc:'#FFD700',gold:true,planet:['220,180,0','150,120,0']},
   {day:22,week:5,word:'融资',pinyin:'róngzī',pron:'ロンズー',meaning:'資金調達',tag:'FUNDRAISING',
-   ex_zh:'这家公司融资十亿美元。',ex_jp:'この会社は10億ドルの資金調達をした。',
+   ex_zh:'这家公司融资十亿美元。',ex_kana:'ヂェー ジャー ゴンスー ロンズー シーイー メイユエン。',ex_jp:'この会社は10億ドルの資金調達をした。',
    naze:'融（溶ける・融合）+ 资（資金）= 融資。スタートアップのラウンドがこれ。',
    x:'🤝 融资（róngzī）= 資金調達。スタートアップの命綱 #宇宙中国語',
    acc:'#C8102E',gold:false,planet:['180,20,30','120,10,20']},
   {day:23,week:5,word:'收益',pinyin:'shōuyì',pron:'ショウイー',meaning:'収益/レベニュー',tag:'REVENUE',
-   ex_zh:'Starlink的收益持续增长。',ex_jp:'StarlinkのRevenue（収益）は成長し続けている。',
+   ex_zh:'Starlink的收益持续增长。',ex_kana:'Starlink ダ ショウイー チーシュー ヅォンヂャン。',ex_jp:'StarlinkのRevenue（収益）は成長し続けている。',
    naze:'收（収める）+ 益（利益）= 収益。SpaceXの$187億収益もこの単語。',
    x:'📈 收益（shōuyì）= 収益。SpaceXを支える数字 #宇宙中国語',
    acc:'#10B981',gold:false,planet:['10,160,110','5,100,70']},
   {day:24,week:5,word:'创业',pinyin:'chuàngyè',pron:'チュアンイエ',meaning:'起業/スタートアップ',tag:'STARTUP',
-   ex_zh:'宇宙创业公司越来越多。',ex_jp:'宇宙スタートアップがどんどん増えている。',
+   ex_zh:'宇宙创业公司越来越多。',ex_kana:'ユイヂョウ チュアンイエ ゴンスー ユエライユエドゥオ。',ex_jp:'宇宙スタートアップがどんどん増えている。',
    naze:'创（創造）+ 业（事業）= 創業。中国でも宇宙スタートアップ（宇宙创业）ブーム中。',
    x:'🚀 创业（chuàngyè）= 起業。宇宙創業の時代が来た #宇宙中国語',
    acc:'#F59E0B',gold:false,planet:['220,140,0','160,90,0']},
   {day:25,week:5,word:'估值',pinyin:'gūzhí',pron:'グーヂー',meaning:'バリュエーション',tag:'VALUATION',
-   ex_zh:'SpaceX的估值达两万亿美元。',ex_jp:'SpaceXのバリュエーションは2兆ドルに達した。',
+   ex_zh:'SpaceX的估值达两万亿美元。',ex_kana:'SpaceX ダ グーヂー ダー リャンワンイー メイユエン。',ex_jp:'SpaceXのバリュエーションは2兆ドルに達した。',
    naze:'估（見積もる）+ 值（価値）= 企業価値評価。SpaceXのIPO议题もこれ。',
    x:'💎 估值（gūzhí）= バリュエーション。SpaceXは$2T #宇宙中国語',
    acc:'#8B5CF6',gold:false,planet:['120,80,220','70,40,160']},
 
   // Week 6: ビジョン
   {day:26,week:6,word:'梦想',pinyin:'mèngxiǎng',pron:'モンシアン',meaning:'夢',tag:'DREAM',
-   ex_zh:'探索宇宙是我的梦想。',ex_jp:'宇宙を探索することが私の夢だ。',
+   ex_zh:'探索宇宙是我的梦想。',ex_kana:'タンスオ ユイヂョウ シー ウォー ダ モンシアン。',ex_jp:'宇宙を探索することが私の夢だ。',
    naze:'梦（夢）+ 想（思い）= 夢想。马斯克（Musk）の火星夢も「梦想」。世界共通の言葉。',
    x:'🌟 梦想（mèngxiǎng）= 夢。宇宙への夢は世界共通 #宇宙中国語',
    acc:'#C8102E',gold:true,planet:['180,20,30','100,10,20']},
   {day:27,week:6,word:'先驱',pinyin:'xiānqū',pron:'シエンチュー',meaning:'パイオニア',tag:'PIONEER',
-   ex_zh:'他是宇宙探索的先驱。',ex_jp:'彼は宇宙探索のパイオニアだ。',
+   ex_zh:'他是宇宙探索的先驱。',ex_kana:'ター シー ユイヂョウ タンスオ ダ シエンチュー。',ex_jp:'彼は宇宙探索のパイオニアだ。',
    naze:'先（先に）+ 驱（駆ける）= 先に走る者。Gagarin・Armstrong・楊利偉全員これ。',
    x:'🏃 先驱（xiānqū）= パイオニア。宇宙の道を切り開く人 #宇宙中国語',
    acc:'#FFD700',gold:false,planet:['220,180,0','150,120,0']},
   {day:28,week:6,word:'无限',pinyin:'wúxiàn',pron:'ウーシエン',meaning:'無限',tag:'INFINITY',
-   ex_zh:'宇宙是无限的。',ex_jp:'宇宙は無限だ。',
+   ex_zh:'宇宙是无限的。',ex_kana:'ユイヂョウ シー ウーシエン ダ。',ex_jp:'宇宙は無限だ。',
    naze:'无（無）+ 限（限り）= 無限。「To infinity and beyond!」が这里就是无限！',
    x:'∞ 无限（wúxiàn）= 無限。宇宙の本質 #宇宙中国語',
    acc:'#6366F1',gold:false,planet:['80,90,220','50,55,160']},
   {day:29,week:6,word:'探索',pinyin:'tànsuǒ',pron:'タンスオ',meaning:'探索',tag:'EXPLORATION',
-   ex_zh:'人类不断探索未知的宇宙。',ex_jp:'人類は未知の宇宙を探索し続けている。',
+   ex_zh:'人类不断探索未知的宇宙。',ex_kana:'レンレイ ブードゥアン タンスオ ウェイヂー ダ ユイヂョウ。',ex_jp:'人類は未知の宇宙を探索し続けている。',
    naze:'探（探る）+ 索（たどる）= 探索。中国の月探査機「嫦娥（Chang\'e）」もこれが目的。',
    x:'🔭 探索（tànsuǒ）= 探索。人類の本能 #宇宙中国語',
    acc:'#3A86FF',gold:false,planet:['50,120,240','20,70,180']},
   {day:30,week:6,word:'未来',pinyin:'wèilái',pron:'ウェイライ',meaning:'未来',tag:'FUTURE',
-   ex_zh:'宇宙是人类的未来。',ex_jp:'宇宙は人類の未来だ。',
+   ex_zh:'宇宙是人类的未来。',ex_kana:'ユイヂョウ シー レンレイ ダ ウェイライ。',ex_jp:'宇宙は人類の未来だ。',
    naze:'未（まだ）+ 来（来る）= まだ来ていないもの。SpaceX・JAXA・全人類の共通テーマ。',
    x:'🔮 未来（wèilái）= 未来。宇宙こそ人類の未来 #宇宙中国語',
    acc:'#C8102E',gold:true,planet:['180,20,30','100,10,20']},
@@ -658,6 +661,7 @@ function renderCard(dir){
   document.getElementById('card-emoji').textContent=EMOJIS[cur%EMOJIS.length];
   document.getElementById('card-scene').style.backgroundImage=mkBg(w);
   document.getElementById('ex-zh').textContent=w.ex_zh;
+  document.getElementById('ex-kana').textContent=w.ex_kana||'';
   document.getElementById('ex-jp').textContent=w.ex_jp;
   document.getElementById('ex-naze').textContent=w.naze;
   document.getElementById('ex-x').textContent=w.x;
