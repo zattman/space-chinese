@@ -79,11 +79,11 @@ body{background:var(--bg);color:var(--text);overscroll-behavior:none;}
 .filter-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(200,16,46,.12);}
 
 .toc-scroll{flex:1;overflow-y:auto;padding:6px 12px 24px;-webkit-overflow-scrolling:touch;}
-.toc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .toc-item{
   background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.065);
-  border-radius:10px;padding:10px 8px 8px;cursor:pointer;
-  transition:all .18s;display:flex;flex-direction:column;align-items:center;gap:3px;
+  border-radius:12px;padding:12px 11px 10px;cursor:pointer;
+  transition:all .18s;display:flex;flex-direction:column;gap:2px;
   position:relative;overflow:hidden;
 }
 .toc-item::before{
@@ -91,13 +91,13 @@ body{background:var(--bg);color:var(--text);overscroll-behavior:none;}
   background:linear-gradient(135deg,var(--c,transparent) 0%,transparent 68%);
   opacity:.055;pointer-events:none;
 }
-.toc-item:active{transform:scale(.94);}
+.toc-item:active{transform:scale(.96);}
 .toc-item.active-card{border-color:var(--accent);background:rgba(200,16,46,.1);}
-.toc-day{font-size:7px;font-weight:700;letter-spacing:1px;color:var(--c,#C8102E);opacity:.8;}
-.toc-word{font-size:22px;font-weight:900;color:#E8EDF5;line-height:1.1;text-align:center;}
-.toc-meaning{display:none;}
-.toc-tag-sm{display:none;}
-.toc-week-header{grid-column:1/-1;font-size:7px;font-weight:700;letter-spacing:3px;color:#2a3a4a;padding:10px 4px 4px;text-transform:uppercase;}
+.toc-day{font-size:8px;font-weight:700;letter-spacing:2px;color:var(--c,#C8102E);}
+.toc-word{font-size:19px;font-weight:900;color:#E8EDF5;line-height:1.1;}
+.toc-meaning{font-size:11px;color:#556677;margin-top:1px;}
+.toc-tag-sm{font-size:8px;color:#334455;margin-top:2px;line-height:1.3;}
+.toc-week-header{grid-column:1/-1;font-size:8px;font-weight:700;letter-spacing:3px;color:#333;padding:12px 4px 6px;text-transform:uppercase;}
 
 /* mascot */
 .mascot-wrap{display:flex;align-items:center;gap:8px;padding:8px 16px 4px;flex-shrink:0;}
@@ -237,6 +237,8 @@ body{background:var(--bg);color:var(--text);overscroll-behavior:none;}
 [data-theme="light"] .toc-week-header{color:#9aabbb;}
 [data-theme="light"] .toc-item{background:rgba(255,255,255,.75);border-color:rgba(10,22,40,.07);}
 [data-theme="light"] .toc-word{color:#0a1628;}
+[data-theme="light"] .toc-meaning{color:#446688;}
+[data-theme="light"] .toc-tag-sm{color:#99aacc;}
 [data-theme="light"] .filter-btn{background:rgba(10,22,40,.04);border-color:rgba(10,22,40,.09);color:#6688aa;}
 [data-theme="light"] .filter-btn.active{border-color:#C8102E;color:#C8102E;background:rgba(200,16,46,.08);}
 [data-theme="light"] .ex-panel{background:rgba(240,244,255,.97);}
